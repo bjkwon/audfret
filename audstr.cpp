@@ -7,33 +7,33 @@
 #include <stdarg.h>
 #endif
 using namespace std;
-
-int sformat(string& out, size_t nLengthMax, const char* format, ...) 
-{
-	char *buffer = new char[nLengthMax];
-	va_list vl;
-	va_start(vl, format);
-	int res = vsnprintf(buffer, nLengthMax, format, vl);
-	buffer[nLengthMax-1] =0;
-	out = string(buffer);
-	delete[] buffer;
-	return res;
-}
-
-
-
-void sformat(string& out, const char* format, ...) 
-{
-	int bufsize = 4096;
-	va_list vl;
-	va_start(vl, format);
-	int res = sformat(out, bufsize, format, vl);
-	while (res >= bufsize)
-	{
-		bufsize *= 2;
-		res = sformat(out, bufsize, format, vl);
-	}
-}
+//
+//int sformat(string& out, size_t nLengthMax, const char* format, ...) 
+//{
+//	char *buffer = new char[nLengthMax];
+//	va_list vl;
+//	va_start(vl, format);
+//	int res = vsnprintf(buffer, nLengthMax, format, vl);
+//	buffer[nLengthMax-1] =0;
+//	out = string(buffer);
+//	delete[] buffer;
+//	return res;
+//}
+//
+//
+//
+//void sformat(string& out, const char* format, ...) 
+//{
+//	int bufsize = 4096;
+//	va_list vl;
+//	va_start(vl, format);
+//	int res = sformat(out, bufsize, format, vl);
+//	while (res >= bufsize)
+//	{
+//		bufsize *= 2;
+//		res = sformat(out, bufsize, format, vl);
+//	}
+//}
 
 void triml(string& str, string delim)
 {

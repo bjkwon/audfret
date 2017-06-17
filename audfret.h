@@ -97,7 +97,7 @@ AUDFRET_EXP std::string consoldateStr(std::vector<std::string> &input, char deli
 AUDFRET_EXP void trim(string& str, string delim);
 AUDFRET_EXP void trim(string& str, char delim);
 AUDFRET_EXP void trim(string& str, char* delim);
-AUDFRET_EXP void sformat(string& out, const char* format, ...);
+AUDFRET_EXP int sformat(string& out, const char* format, ...);
 AUDFRET_EXP int sformat(string& out, size_t nLengthMax, const char* format, ...);
 
 AUDFRET_EXP void ReplaceStr(string &str, const string& from, const string& to);

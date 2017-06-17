@@ -113,3 +113,42 @@ AUDFRET_EXP void splitevenindices(vector<int> &out, int nTotals, int nGroups)
 		delete[] holder;
 	}
 }
+
+AUDFRET_EXP int sformat(string& out, size_t nLengthMax, const char* format, ...) 
+{
+	// Obsolete as of 5/2/2017 bjkwon
+	char *buffer = new char[nLengthMax];
+	va_list vl;
+	va_start(vl, format);
+	int res = vsnprintf(buffer, nLengthMax, format, vl);
+	buffer[nLengthMax-1] =0;
+	out = string(buffer);
+	delete[] buffer;
+	va_end(vl);
+	return res;
+}
+
+
+AUDFRET_EXP int sformat(string& out, const char* format, ...) 
+{
+	size_t bufsize(4096);
+	bufsize += strlen(format);
+	const char *tp;
+	va_list args;
+	va_start(args, format);
+	char *buffer = new char[bufsize];
+	int res = vsnprintf(buffer, bufsize, format, args);
+	va_end(args);
+	if (res>=bufsize) 
+	{
+		delete[] buffer;
+		bufsize = res+1;
+		buffer = new char[bufsize];
+		va_start(args, format);
+		res = vsnprintf(buffer, bufsize, format, args);
+		va_end(args);
+	}
+	out = string(buffer);
+	delete[] buffer;
+	return res; // This includes the null character
+}
