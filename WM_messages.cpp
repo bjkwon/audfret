@@ -6,7 +6,9 @@
 
 using namespace std;
 
-AUDFRET_EXP void makewmstr(map<unsigned int, string> &wmstr)
+map<unsigned int, string> wmstr;
+
+AUDFRET_EXP void makewmstr()
 {
 	wmstr.clear();
 	wmstr[1] = "WM_CREATE";
@@ -83,22 +85,16 @@ AUDFRET_EXP void makewmstr(map<unsigned int, string> &wmstr)
 	wmstr[0x0800] = "WM_APP";
 }
 
-AUDFRET_EXP int spyWM(HWND hDlg, UINT umsg, WPARAM wParam, LPARAM lParam, char* const fname, map<unsigned int, string> wmstr, vector<UINT> msg2excl, char* const tagstr)
+AUDFRET_EXP int spyWM(HWND hDlg, UINT umsg, WPARAM wParam, LPARAM lParam, char* const fname, vector<UINT> msg2excl, char* const tagstr)
 {
-	bool printthis(true);
+	if (!wmstr.size()) makewmstr();
 	FILE *fp=fopen(fname,"at");
 	if (fp)
 	{
 		for (int k=0; k<msg2excl.size(); k++)
-		{
 			if (umsg==msg2excl[k])
-			{
-				printthis = false;
-				break;
-			}
-		}
-		if (printthis)
-			fprintf(fp, "%shDlg %x: msg: 0x%04x %s, wParam=%x, lParam=%x\n", tagstr, hDlg, umsg, wmstr[umsg].c_str(), wParam, lParam);
+				return -1;
+		fprintf(fp, "%s %x: msg: 0x%04x %s, wParam=%x, lParam=%x\n", tagstr, hDlg, umsg, wmstr[umsg].c_str(), wParam, lParam);
 		fclose(fp); 
 		return 1;
 	}

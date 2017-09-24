@@ -15,7 +15,7 @@ AUDFRET_EXP void ReplaceStr(string &str, const string& from, const string& to) {
 }
 
 AUDFRET_EXP size_t str2vect(vector<string> &_out, const char* input, const char *delim)
-{
+{ // Bug found--If delim contains repeating character(s), it goes into an infinite loop. Avoid that. 8/4/2017
 	size_t pos;
 	string str(input);
 	string delim2(delim); 
